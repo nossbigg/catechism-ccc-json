@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"beautifulsoup4" = "4.7.1"
+requests = "2.21.0"
+
+[dev-packages]
+"autopep8" = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+scrape = "python src/scrape.py"
