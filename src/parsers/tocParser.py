@@ -5,7 +5,8 @@ from src.common.NodeIdGenerator import NodeIdGenerator
 CATECHISM_BASE_URL = 'http://www.vatican.va/archive/ENG0015/'
 
 
-TocLink = namedtuple('TocLink', 'id indent_level text link')
+TocRawLink = namedtuple('TocRawLink', 'id indent_level text link')
+TocLink = namedtuple('TocLink', 'data children')
 
 
 def parseToc(html_doc):
@@ -13,8 +14,10 @@ def parseToc(html_doc):
     soup = BeautifulSoup(html_doc, 'html5lib')
 
     toc_root = soup.select("body > font")[0]
-    toc_links = parseNode(toc_root.find(
+    toc_raw_links = parseNode(toc_root.find(
         "ul", recursive=False), 0, id_generator)
+
+    toc_links = parseTocRawLinks(toc_raw_links, 1)
     return toc_links
 
 
@@ -31,20 +34,42 @@ def parseNode(ul_node_tag, indent_level, id_generator):
         new_indent_level = indent_level + 1 if node.name == "li" else indent_level
         if node.name == "font":
             nodes.append(
-                createTocLink(id_generator.generate_id(),
-                              node,
-                              new_indent_level
-                              ))
+                createTocRawLink(id_generator.generate_id(),
+                                 node,
+                                 new_indent_level
+                                 ))
 
         nodes = nodes + parseNode(node, new_indent_level, id_generator)
 
     return nodes
 
 
-def createTocLink(toc_id, font_node, indent_level):
+def parseTocRawLinks(raw_links, indent_level):
+    blocks = []
+    present_block = []
+    for link in raw_links:
+        if link.indent_level == indent_level and len(present_block) > 0:
+            blocks.append(present_block)
+            present_block = []
+
+        present_block.append(link)
+
+    if len(present_block) > 0:
+        blocks.append(present_block)
+
+    links = []
+    for block in blocks:
+        head_node = block[0]
+        children = parseTocRawLinks(block[1:], indent_level + 1)
+        links.append(TocLink(head_node, children))
+
+    return links
+
+
+def createTocRawLink(toc_id, font_node, indent_level):
     link = None
     link_node = font_node.find('a')
     if(link_node):
         link = CATECHISM_BASE_URL + link_node['href']
 
-    return TocLink(toc_id, indent_level, font_node.text, link)
+    return TocRawLink(toc_id, indent_level, font_node.text, link)
