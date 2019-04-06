@@ -47,7 +47,8 @@ def extractFootnotesNodes(content_start_node, footnotes_start_node, footer_node)
     result = []
     current_node = footnotes_start_node.next_sibling
     while current_node is not footer_node:
-        result.append(current_node)
+        if current_node.name == 'font':
+            result.append(current_node)
         current_node = current_node.next_sibling
     return result
 
