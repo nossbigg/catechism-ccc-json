@@ -1,7 +1,7 @@
 from src.scrapers.tocScraper import downloadTocHtml, saveTocToDisk
 from src.parsers.tocParser import parseToc
 
-tocHtml = downloadTocHtml()
-saveTocToDisk(tocHtml)
+toc_html = downloadTocHtml()
+saveTocToDisk(toc_html)
 
-tocLinks = parseToc(tocHtml)
+toc_link_tree, toc_nodes_dict = parseToc(toc_html)
