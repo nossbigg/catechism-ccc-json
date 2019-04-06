@@ -33,7 +33,7 @@ def extractContentsNodes(content_start_node, footnotes_start_node, footer_node):
     result = []
     ending_node = footnotes_start_node if footnotes_start_node is not None else footer_node
 
-    current_node = content_start_node
+    current_node = content_start_node.next_sibling
     while current_node is not ending_node:
         result.append(current_node)
         current_node = current_node.next_sibling
@@ -45,7 +45,7 @@ def extractFootnotesNodes(content_start_node, footnotes_start_node, footer_node)
         return []
 
     result = []
-    current_node = footnotes_start_node
+    current_node = footnotes_start_node.next_sibling
     while current_node is not footer_node:
         result.append(current_node)
         current_node = current_node.next_sibling
