@@ -1,4 +1,7 @@
 import requests
+import os
+
+from src.common.config import DATA_SAVE_PATH, PAGES_SAVE_PATH
 
 
 def downloadPagesHtmls(toc_nodes_dict):
@@ -15,3 +18,13 @@ def downloadPagesHtmls(toc_nodes_dict):
         }
 
     return result
+
+
+def savePagesToDisk(pages_html_dict):
+    os.makedirs(PAGES_SAVE_PATH, exist_ok=True)
+
+    for toc_id, item in pages_html_dict.items():
+        file_save_path = os.path.join(PAGES_SAVE_PATH, toc_id + '.html')
+
+        with open(file_save_path, 'w+') as f:
+            f.write(item['html'])

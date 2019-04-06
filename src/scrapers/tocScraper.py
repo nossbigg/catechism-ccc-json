@@ -1,9 +1,8 @@
 import requests
 import os
+from src.common.config import DATA_SAVE_PATH, CATECHISM_TOC_SAVE_PATH
 
 CATECHISM_URL = "http://www.vatican.va/archive/ENG0015/_INDEX.HTM"
-DATA_SAVE_PATH = os.path.abspath("data/")
-CATECHISM_TOC_SAVE_PATH = os.path.abspath("data/toc.html")
 
 
 def downloadTocHtml():
