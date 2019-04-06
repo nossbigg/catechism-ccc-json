@@ -1,20 +1,27 @@
 from collections import namedtuple
 from bs4 import BeautifulSoup
 
-PageContent = namedtuple('PageContent', 'id contents footnotes')
+Page = namedtuple('Page', 'id contents footnotes')
+PageContents = namedtuple('PageContents', 'nodes')
+PageContent = namedtuple('PageContent', 'text')
+PageFootnotes = namedtuple('PageFootnotes', 'mapping')
+PageFootnote = namedtuple('PageFootnote', 'number text')
 
 
 def parsePages(pages_html_dict):
-    page_contents = [parsePage(e['html']) for e in pages_html_dict.values()]
+    page_contents_raw = [parsePageToRawContents(
+        e['html']) for e in pages_html_dict.values()]
+    page_contents_processed = [
+        parseRawContentsToStructuredContents(e) for e in page_contents_raw]
 
     result = {}
-    for toc_id, page_content in zip(pages_html_dict.keys(), page_contents):
-        content_nodes, footnote_nodes = page_content
-        result[toc_id] = PageContent(toc_id, content_nodes, footnote_nodes)
+    for toc_id, page_content in zip(pages_html_dict.keys(), page_contents_processed):
+        page_contents, page_footnotes = page_content
+        result[toc_id] = Page(toc_id, page_contents, page_footnotes)
     return result
 
 
-def parsePage(html_doc):
+def parsePageToRawContents(html_doc):
     soup = BeautifulSoup(html_doc, 'html5lib')
 
     content_start_node = getContentsFirstNode(soup)
@@ -70,3 +77,32 @@ def getFootnotesFirstNode(soup):
     if len(footnotes_nodes) == 0:
         return None
     return footnotes_nodes[0]
+
+
+def parseRawContentsToStructuredContents(page_content):
+    content_raw_nodes, footnote_raw_nodes = page_content
+
+    content_nodes = extractStructuredContents(content_raw_nodes)
+    footnote_nodes = extractStructuredFootnotes(footnote_raw_nodes)
+
+    return content_nodes, footnote_nodes
+
+
+def extractStructuredFootnotes(raw_nodes):
+    mapping = {}
+
+    for index in range(0, len(raw_nodes), 2):
+        footnote_number_node = raw_nodes[index].find('a')
+        text_node = raw_nodes[index+1]
+
+        footnote_number = int(footnote_number_node.text)
+        text = text_node.text
+        text = text.replace("⇒", "").strip()
+
+        mapping[footnote_number] = PageFootnote(footnote_number, text)
+
+    return PageFootnotes(mapping)
+
+
+def extractStructuredContents(raw_nodes):
+    return PageContents(raw_nodes)
