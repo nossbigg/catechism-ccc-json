@@ -16,11 +16,11 @@ def extractStructuredContents(raw_nodes):
 
 
 def processElement(node):
-    if node.name != 'p':
-        return []
-
     if node.name == 'br':
         return [createSpacerElement()]
+
+    if node.name != 'p':
+        return []
 
     flattened_text = node.text.replace('\n', ' ')
     if isEmptyOutput(flattened_text):
