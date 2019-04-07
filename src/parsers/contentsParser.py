@@ -40,13 +40,13 @@ def processParagraphChild(node, attrs):
     new_attrs = attrs
     if node.name == 'i':
         new_attrs['i'] = True
-        return processParagraphChild(getFirstChildOfNode(node), new_attrs)
+        return unwrapChildren(node, new_attrs)
 
     if node.name == 'b':
         new_attrs['b'] = True
         if node.get('style') is not None:
             new_attrs['heavy_header'] = True
-        return processParagraphChild(getFirstChildOfNode(node), new_attrs)
+        return unwrapChildren(node, new_attrs)
 
     if node.name == 'br':
         return [createSpacerElement()]
@@ -61,6 +61,14 @@ def processParagraphChild(node, attrs):
         return [processTextElement(node, attrs)]
 
     return []
+
+
+def unwrapChildren(node, attrs):
+    result = []
+    for n in node.children:
+        result = result + processParagraphChild(n, attrs)
+
+    return result
 
 
 def processTextElement(node, attrs):
@@ -88,10 +96,3 @@ def isEmptyOutput(node_text):
 
 def isCCCReferenceLine(node_text):
     return cccReferencedLineMatcher.match(node_text)
-
-
-def getFirstChildOfNode(node):
-    children = list(node.children)
-    if len(children) == 0:
-        return None
-    return children[0]
