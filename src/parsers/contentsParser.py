@@ -2,7 +2,7 @@ import re
 from collections import namedtuple
 PageContents = namedtuple('PageContents', 'nodes')
 PageContent = namedtuple('PageContent', 'text')
-Paragraph = namedtuple('Paragraph', 'children')
+Paragraph = namedtuple('Paragraph', 'children attrs')
 
 cccReferencedLineMatcher = re.compile('^[0-9]+ ')
 
@@ -30,7 +30,7 @@ def processElement(node):
     for paragraph_node in node.children:
         children = children + processParagraphChild(paragraph_node, {})
 
-    return [Paragraph(children)]
+    return [createParagraph(node, children)]
 
 
 def processParagraphChild(node, attrs):
@@ -87,6 +87,22 @@ def processAnchorElement(node, attrs):
 
 def createSpacerElement():
     return {'type': 'spacer'}
+
+
+def createParagraph(node, children):
+    attrs = {}
+    if isIndentedParagraph(node):
+        attrs['indent'] = True
+
+    return Paragraph(children, attrs)
+
+
+def isIndentedParagraph(node):
+    style = node.get('style')
+    if style is None:
+        return False
+
+    return 'margin-left:35.4pt' in style
 
 
 def isEmptyOutput(node_text):
