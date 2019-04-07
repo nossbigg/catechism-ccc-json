@@ -8,25 +8,26 @@ cccReferencedLineMatcher = re.compile('^[0-9]+ ')
 
 
 def extractStructuredContents(raw_nodes):
-    result = [processElement(n) for n in raw_nodes]
-    result = [n for n in result if n is not None]
-
+    result = []
+    for n in raw_nodes:
+        result = result + processElement(n)
+    
     return PageContents(result)
 
 
 def processElement(node):
     if node.name != 'p':
-        return None
+        return []
 
     flattened_text = node.text.replace('\n', ' ')
     if isEmptyOutput(flattened_text):
-        return None
+        return []
 
     children = []
     for paragraph_node in node.children:
         children = children + processParagraphChild(paragraph_node, {})
 
-    return Paragraph(children)
+    return [Paragraph(children)]
 
 
 def processParagraphChild(node, attrs):
