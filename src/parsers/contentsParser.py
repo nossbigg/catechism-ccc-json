@@ -11,13 +11,16 @@ def extractStructuredContents(raw_nodes):
     result = []
     for n in raw_nodes:
         result = result + processElement(n)
-    
+
     return PageContents(result)
 
 
 def processElement(node):
     if node.name != 'p':
         return []
+
+    if node.name == 'br':
+        return [createSpacerElement()]
 
     flattened_text = node.text.replace('\n', ' ')
     if isEmptyOutput(flattened_text):
@@ -46,7 +49,7 @@ def processParagraphChild(node, attrs):
         return processParagraphChild(getFirstChildOfNode(node), new_attrs)
 
     if node.name == 'br':
-        return []
+        return [createSpacerElement()]
 
     if node.name == 'font':
         return [processFontElement(node, attrs)]
@@ -72,6 +75,10 @@ def processFontElement(node, attrs):
 
 def processAnchorElement(node, attrs):
     return {'type': 'ref', 'link': node.get('href'), 'attrs': attrs}
+
+
+def createSpacerElement():
+    return {'type': 'spacer'}
 
 
 def isEmptyOutput(node_text):
