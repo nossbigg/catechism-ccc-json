@@ -6,7 +6,7 @@ CATECHISM_BASE_URL = 'http://www.vatican.va/archive/ENG0015/'
 
 
 TocRawLink = namedtuple('TocRawLink', 'id indent_level text link')
-TocLink = namedtuple('TocLink', 'id children')
+TocTreeLink = namedtuple('TocLink', 'id children')
 
 
 def parseToc(html_doc):
@@ -62,7 +62,7 @@ def createTocLinkTree(raw_links, indent_level):
     for block in blocks:
         head_node = block[0]
         children = createTocLinkTree(block[1:], indent_level + 1)
-        links.append(TocLink(head_node.id, children))
+        links.append(TocTreeLink(head_node.id, children))
 
     return links
 
