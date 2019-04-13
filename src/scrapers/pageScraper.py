@@ -34,6 +34,7 @@ def readPagesFromDisk():
     result = {}
 
     page_html_files = glob.glob(PAGES_SAVE_PATH + "/*.html")
+    page_html_files.sort()
     for file_path in page_html_files:
         with open(file_path, 'r') as f:
             toc_id = os.path.basename(f.name).split('.')[0]
