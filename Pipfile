@@ -17,3 +17,4 @@ python_version = "3.7"
 
 [scripts]
 scrape = "python src/scrape.py"
+parse = "python src/parse.py"

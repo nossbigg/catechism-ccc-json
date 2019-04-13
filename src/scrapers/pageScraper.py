@@ -1,5 +1,6 @@
 import grequests
 import os
+import glob
 
 from src.common.config import DATA_SAVE_PATH, PAGES_SAVE_PATH
 
@@ -14,10 +15,7 @@ def downloadPagesHtmls(toc_nodes_dict):
     responses = grequests.map(requestItems)
 
     for response, toc_item in zip(responses, toc_with_urls):
-        result[toc_item.id] = {
-            'node': toc_item,
-            'html': response.text
-        }
+        result[toc_item.id] = response.text
 
     return result
 
@@ -25,8 +23,21 @@ def downloadPagesHtmls(toc_nodes_dict):
 def savePagesToDisk(pages_html_dict):
     os.makedirs(PAGES_SAVE_PATH, exist_ok=True)
 
-    for toc_id, item in pages_html_dict.items():
+    for toc_id, html in pages_html_dict.items():
         file_save_path = os.path.join(PAGES_SAVE_PATH, toc_id + '.html')
 
         with open(file_save_path, 'w+') as f:
-            f.write(item['html'])
+            f.write(html)
+
+
+def readPagesFromDisk():
+    result = {}
+
+    page_html_files = glob.glob(PAGES_SAVE_PATH + "/*.html")
+    for file_path in page_html_files:
+        with open(file_path, 'r') as f:
+            toc_id = os.path.basename(f.name).split('.')[0]
+            contents = f.read()
+            result[toc_id] = contents
+
+    return result

@@ -8,7 +8,7 @@ Page = namedtuple('Page', 'id contents footnotes')
 
 def parsePages(pages_html_dict):
     page_contents_raw = [parsePageToRawContents(
-        e['html']) for e in pages_html_dict.values()]
+        html) for html in pages_html_dict.values()]
     page_contents_processed = [
         parseRawContentsToStructuredContents(e) for e in page_contents_raw]
 
