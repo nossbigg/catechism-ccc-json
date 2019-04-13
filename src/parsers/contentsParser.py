@@ -82,7 +82,7 @@ def processFontElement(node, attrs):
 
 
 def processAnchorElement(node, attrs):
-    return {'type': 'ref', 'link': node.get('href'), 'attrs': attrs}
+    return {'type': 'ref-anchor', 'link': node.get('href'), 'attrs': attrs}
 
 
 def createSpacerElement():
