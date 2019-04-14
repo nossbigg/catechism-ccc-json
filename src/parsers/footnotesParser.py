@@ -24,7 +24,6 @@ def extractStructuredFootnotes(raw_nodes):
 def extractFootnoteRefs(footnote_text):
     ref_texts = footnote_text.split(";")
     ref_texts = [cleanRefText(t) for t in ref_texts]
-    print(ref_texts)
     return [PageFootnoteRef(text) for text in ref_texts]
 
 
