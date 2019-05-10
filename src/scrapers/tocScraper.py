@@ -1,6 +1,6 @@
 import requests
 import os
-from src.common.config import DATA_SAVE_PATH, CATECHISM_TOC_SAVE_PATH
+from common.config import DATA_SAVE_PATH, CATECHISM_TOC_SAVE_PATH
 
 CATECHISM_URL = "http://www.vatican.va/archive/ENG0015/_INDEX.HTM"
 

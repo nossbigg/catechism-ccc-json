@@ -1,7 +1,7 @@
-from src.scrapers.tocScraper import downloadTocHtml, saveTocToDisk
-from src.parsers.tocParser import parseToc
-from src.scrapers.pageScraper import downloadPagesHtmls, savePagesToDisk
-from src.scrapers.abbreviationsScraper import downloadAbbreviationsHtml, saveAbbreviationsToDisk
+from scrapers.tocScraper import downloadTocHtml, saveTocToDisk
+from parsers.tocParser import parseToc
+from scrapers.pageScraper import downloadPagesHtmls, savePagesToDisk
+from scrapers.abbreviationsScraper import downloadAbbreviationsHtml, saveAbbreviationsToDisk
 
 toc_html = downloadTocHtml()
 saveTocToDisk(toc_html)

@@ -1,5 +1,5 @@
 import requests
-from src.common.config import ABBREVIATIONS_SAVE_PATH
+from common.config import ABBREVIATIONS_SAVE_PATH
 
 ABBREVIATIONS_URL = 'http://www.scborromeo.org/mobileccc/abbrev.htm'
 

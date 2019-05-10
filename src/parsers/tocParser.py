@@ -1,7 +1,7 @@
 
 from collections import namedtuple
 from bs4 import BeautifulSoup
-from src.common.NodeIdGenerator import NodeIdGenerator
+from common.NodeIdGenerator import NodeIdGenerator
 CATECHISM_BASE_URL = 'http://www.vatican.va/archive/ENG0015/'
 
 

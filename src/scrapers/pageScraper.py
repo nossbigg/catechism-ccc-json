@@ -2,7 +2,7 @@ import grequests
 import os
 import glob
 
-from src.common.config import DATA_SAVE_PATH, PAGES_SAVE_PATH
+from common.config import DATA_SAVE_PATH, PAGES_SAVE_PATH
 
 
 def downloadPagesHtmls(toc_nodes_dict):

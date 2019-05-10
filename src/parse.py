@@ -1,10 +1,10 @@
-from src.scrapers.tocScraper import readTocFromDisk
-from src.scrapers.pageScraper import readPagesFromDisk
-from src.scrapers.abbreviationsScraper import readAbbreviationsFromDisk
-from src.parsers.tocParser import parseToc
-from src.parsers.pageParser import parsePages
-from src.parsers.abbreviationsParser import parseAbbreviations
-from src.exporters.jsonExporter import exportStoreAsJson
+from scrapers.tocScraper import readTocFromDisk
+from scrapers.pageScraper import readPagesFromDisk
+from scrapers.abbreviationsScraper import readAbbreviationsFromDisk
+from parsers.tocParser import parseToc
+from parsers.pageParser import parsePages
+from parsers.abbreviationsParser import parseAbbreviations
+from exporters.jsonExporter import exportStoreAsJson
 
 toc_html = readTocFromDisk()
 toc_link_tree, toc_nodes_dict = parseToc(toc_html)

@@ -1,7 +1,7 @@
 import simplejson
 from collections import namedtuple
 
-from src.common.config import JSON_STORE_PATH
+from common.config import JSON_STORE_PATH
 
 JsonStore = namedtuple('JsonStore', 'toc_link_tree toc_nodes page_nodes bible_refs other_refs')
 

@@ -1,7 +1,7 @@
 from collections import namedtuple
 from bs4 import BeautifulSoup
-from src.parsers.contentsParser import extractStructuredContents
-from src.parsers.footnotesParser import extractStructuredFootnotes
+from parsers.contentsParser import extractStructuredContents
+from parsers.footnotesParser import extractStructuredFootnotes
 
 Page = namedtuple('Page', 'id contents footnotes')
 
