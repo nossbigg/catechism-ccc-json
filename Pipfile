@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"beautifulsoup4" = "4.7.1"
-requests = "2.21.0"
-"html5lib" = "1.0.1"
-grequests = "0.3.0"
-simplejson = "3.16.0"
+"beautifulsoup4" = "==4.7.1"
+requests = "==2.21.0"
+"html5lib" = "==1.0.1"
+grequests = "==0.3.0"
+simplejson = "==3.16.0"
 
 [dev-packages]
 "autopep8" = "*"
