@@ -14,7 +14,7 @@ simplejson = "3.16.0"
 "autopep8" = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"
 
 [scripts]
 scrape = "python src/scrape.py"
