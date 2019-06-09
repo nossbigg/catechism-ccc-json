@@ -11,9 +11,9 @@ toc_link_tree, toc_nodes_dict = parseToc(toc_html)
 
 abbreviations_html = readAbbreviationsFromDisk()
 bible_refs, other_refs = parseAbbreviations(abbreviations_html)
+ccc_refs = {'bible': bible_refs, 'other': other_refs}
 
 pages_html_dict = readPagesFromDisk()
 page_nodes_dict = parsePages(pages_html_dict)
 
-exportStoreAsJson(toc_link_tree, toc_nodes_dict,
-                  page_nodes_dict, bible_refs, other_refs)
+exportStoreAsJson(toc_link_tree, toc_nodes_dict, page_nodes_dict, ccc_refs)
