@@ -80,7 +80,7 @@ def processTextElement(node, attrs):
 
 def processFontElement(node, attrs):
     ref_number = int(node.text)
-    return {'type': 'ref', 'number': ref_number, 'attrs': attrs}
+    return {'type': 'ref', 'number': ref_number}
 
 
 def processAnchorElement(node, attrs):
