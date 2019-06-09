@@ -2,7 +2,7 @@ import re
 from collections import namedtuple
 PageContents = namedtuple('PageContents', 'nodes')
 PageContent = namedtuple('PageContent', 'text')
-Paragraph = namedtuple('Paragraph', 'children attrs')
+Paragraph = namedtuple('Paragraph', 'elements attrs')
 
 cccReferencedLineMatcher = re.compile('^[0-9]+ ')
 
