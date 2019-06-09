@@ -9,6 +9,7 @@ requests = "==2.21.0"
 "html5lib" = "==1.0.1"
 grequests = "==0.3.0"
 simplejson = "==3.16.0"
+pytest = "*"
 
 [dev-packages]
 "autopep8" = "*"
@@ -20,3 +21,4 @@ python_version = "3.6"
 [scripts]
 scrape = "python src/scrape.py"
 parse = "python src/parse.py"
+test = "pytest"
