@@ -3,7 +3,7 @@ import re
 
 REFERENCE_ARROW_SYMBOL = '⇒'
 
-PageFootnotes = namedtuple('PageFootnotes', 'mapping')
+
 PageFootnote = namedtuple('PageFootnote', 'number refs')
 PageFootnoteRef = namedtuple('PageFootnoteRef', 'text link')
 
@@ -20,7 +20,7 @@ def extractStructuredFootnotes(raw_nodes):
 
         mapping[footnote_number] = PageFootnote(footnote_number, refs)
 
-    return PageFootnotes(mapping)
+    return mapping
 
 
 def extractFootnoteRefs(footnote_node):
