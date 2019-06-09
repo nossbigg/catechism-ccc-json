@@ -58,6 +58,9 @@ def processParagraphChild(node, attrs):
         return [processAnchorElement(node, attrs)]
 
     if node.name == None:
+        if isEmptyOutput(node.string):
+            return []
+
         return [processTextElement(node, attrs)]
 
     return []
