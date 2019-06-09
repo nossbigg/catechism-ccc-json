@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from parsers.contentsParser import extractStructuredContents
 from parsers.footnotesParser import extractStructuredFootnotes
 
-Page = namedtuple('Page', 'id contents footnotes')
+Page = namedtuple('Page', 'id paragraphs footnotes')
 
 
 def parsePages(pages_html_dict):
