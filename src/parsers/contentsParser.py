@@ -1,6 +1,5 @@
 import re
 from collections import namedtuple
-PageContents = namedtuple('PageContents', 'nodes')
 PageContent = namedtuple('PageContent', 'text')
 Paragraph = namedtuple('Paragraph', 'elements attrs')
 
@@ -12,7 +11,7 @@ def extractStructuredContents(raw_nodes):
     for n in raw_nodes:
         result = result + processElement(n)
 
-    return PageContents(result)
+    return result
 
 
 def processElement(node):
