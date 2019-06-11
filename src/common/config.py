@@ -7,3 +7,4 @@ PAGES_SAVE_PATH = os.path.abspath("data/pages/")
 ABBREVIATIONS_SAVE_PATH = os.path.join(DATA_SAVE_PATH, "abbreviations.html")
 
 JSON_STORE_PATH = os.path.join(DATA_SAVE_PATH, "ccc.json")
+JSON_STORE_VERSION = '0.0.1'
