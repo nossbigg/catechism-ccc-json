@@ -1,10 +1,10 @@
-# ccc-catechism-json
+# catechism-ccc-json
 
 The Catechism of the Catholic Church, now available in `json` format!
 
 ## tldr; show me the goods now!
 
-Head over to the releases tab and pick up a copy now! 🤓
+Head over to the [releases tab](https://github.com/nossbigg/catechism-ccc-json/releases) and pick up a copy now! 🤓
 
 If you've found this useful in any way, send me a thanks my way! (I'm curious as to see who uses this haha 😅)
 
