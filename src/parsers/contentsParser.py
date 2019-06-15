@@ -3,15 +3,16 @@ from collections import namedtuple
 PageContent = namedtuple('PageContent', 'text')
 Paragraph = namedtuple('Paragraph', 'elements attrs')
 
-cccReferencedLineMatcher = re.compile('^[0-9]+ ')
+cccReferenceLineMatcher = re.compile('(^[0-9]+) (.*)')
 
 
 def extractStructuredContents(raw_nodes):
-    result = []
+    paragraphs = []
     for n in raw_nodes:
-        result = result + processElement(n)
+        paragraphs = paragraphs + processElement(n)
 
-    return result
+    paragraphs = [transformCCCReferenceLine(p) for p in paragraphs]
+    return paragraphs
 
 
 def processElement(node):
@@ -65,6 +66,45 @@ def processParagraphChild(node, attrs):
     return []
 
 
+def transformCCCReferenceLine(paragraph):
+    if not hasCCCReferenceLine(paragraph):
+        return paragraph
+
+    elements = paragraph.elements
+    first_element = elements[0]
+    rest_elements = elements[1:]
+
+    ccc_ref_element, new_text_element = splitCCCReferenceFromTextElement(
+        first_element)
+
+    new_elements = [ccc_ref_element, new_text_element] + rest_elements
+    new_paragrah = Paragraph(new_elements, paragraph.attrs)
+    return new_paragrah
+
+
+def hasCCCReferenceLine(paragraph):
+    if not isinstance(paragraph, Paragraph):
+        return False
+
+    first_element = paragraph.elements[0]
+
+    if 'text' not in first_element:
+        return False
+
+    return cccReferenceLineMatcher.match(first_element['text'])
+
+
+def splitCCCReferenceFromTextElement(element):
+    text_match = cccReferenceLineMatcher.match(element['text'])
+    element_attrs = element['attrs']
+
+    ccc_ref_element = createCCCRefElement(
+        int(text_match.group(1)), element_attrs)
+    new_text_element = createTextElement(text_match.group(2), element_attrs)
+
+    return ccc_ref_element, new_text_element
+
+
 def unwrapChildren(node, attrs):
     result = []
     for n in node.children:
@@ -91,6 +131,14 @@ def createSpacerElement():
     return {'type': 'spacer'}
 
 
+def createTextElement(text, attrs):
+    return {'type': 'text', 'text': text, 'attrs': attrs}
+
+
+def createCCCRefElement(ref_number, attrs):
+    return {'type': 'ref-ccc', 'ref_number': ref_number}
+
+
 def createParagraph(node, children):
     attrs = {}
     if isIndentedParagraph(node):
@@ -110,7 +158,3 @@ def isIndentedParagraph(node):
 def isEmptyOutput(node_text):
     text = node_text.replace('\n', "").strip()
     return len(text) == 0
-
-
-def isCCCReferenceLine(node_text):
-    return cccReferencedLineMatcher.match(node_text)
