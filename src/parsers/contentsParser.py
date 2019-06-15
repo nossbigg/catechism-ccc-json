@@ -17,7 +17,7 @@ def extractStructuredContents(raw_nodes):
 
 def processElement(node):
     if node.name == 'br':
-        return [createSpacerElement()]
+        return [createEmptyParagraph()]
 
     if node.name != 'p':
         return []
@@ -83,11 +83,7 @@ def transformCCCReferenceLine(paragraph):
 
 
 def hasCCCReferenceLine(paragraph):
-    if not isinstance(paragraph, Paragraph):
-        return False
-
     first_element = paragraph.elements[0]
-
     if 'text' not in first_element:
         return False
 
@@ -145,6 +141,9 @@ def createParagraph(node, children):
         attrs['indent'] = True
 
     return Paragraph(children, attrs)
+
+def createEmptyParagraph():
+    return Paragraph([createSpacerElement()], {})
 
 
 def isIndentedParagraph(node):
